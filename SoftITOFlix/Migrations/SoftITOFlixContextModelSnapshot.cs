@@ -205,7 +205,8 @@ namespace SoftITOFlix.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MediaId");
+                    b.HasIndex("MediaId", "SeasonNumber", "EpisodeNumber")
+                        .IsUnique();
 
                     b.ToTable("Episodes");
                 });

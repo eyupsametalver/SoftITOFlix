@@ -1,16 +1,20 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SoftITOFlix.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace SoftITOFlix.Data
 {
-	public class SoftITOFlixContext:IdentityDbContext<SoftITOFlixUser,SoftITOFlixRole,long>
-	{
-		public SoftITOFlixContext(DbContextOptions<SoftITOFlixContext>options)
-			:base(options)
-		{
-		}
-
+    public class SoftITOFlixContext : IdentityDbContext<SoftITOFlixUser, SoftITOFlixRole, long>
+    {
+        public SoftITOFlixContext(DbContextOptions<SoftITOFlixContext> options)
+            : base(options)
+        {
+        }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -20,8 +24,9 @@ namespace SoftITOFlix.Data
             builder.Entity<MediaStar>().HasKey(m => new { m.MediaId, m.StarId });
             builder.Entity<UserFavorite>().HasKey(u => new { u.UserId, u.MediaId });
             builder.Entity<UserWatched>().HasKey(u => new { u.UserId, u.EpisodeId });
-
+            builder.Entity<Episode>().HasIndex(e => new { e.MediaId, e.SeasonNumber, e.EpisodeNumber }).IsUnique();
         }
+
         public DbSet<SoftITOFlix.Models.Category> Categories { get; set; } = default!;
         public DbSet<SoftITOFlix.Models.Director> Directors { get; set; } = default!;
         public DbSet<SoftITOFlix.Models.Episode> Episodes { get; set; } = default!;
@@ -34,8 +39,7 @@ namespace SoftITOFlix.Data
         public DbSet<SoftITOFlix.Models.Restriction> Restrictions { get; set; } = default!;
         public DbSet<SoftITOFlix.Models.Star> Stars { get; set; } = default!;
         public DbSet<SoftITOFlix.Models.UserFavorite> UserFavorites { get; set; } = default!;
-        public DbSet<SoftITOFlix.Models.UserWatched> UserWatcheds { get; set; } = default!;
         public DbSet<SoftITOFlix.Models.UserPlan> UserPlans { get; set; } = default!;
+        public DbSet<SoftITOFlix.Models.UserWatched> UserWatcheds { get; set; } = default!;
     }
 }
-

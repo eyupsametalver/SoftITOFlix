@@ -1,10 +1,9 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SoftITOFlix.Models
 {
-	public class UserFavorite
-	{
+    public class UserFavorite
+    {
         public long UserId { get; set; }
         public int MediaId { get; set; }
         [ForeignKey("UserId")]
@@ -13,4 +12,3 @@ namespace SoftITOFlix.Models
         public Media? Media { get; set; }
     }
 }
-
